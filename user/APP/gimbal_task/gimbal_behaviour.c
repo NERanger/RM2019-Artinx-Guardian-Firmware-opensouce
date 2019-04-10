@@ -192,6 +192,15 @@ void gimbal_behaviour_mode_set(Gimbal_Control_t *gimbal_mode_set)
         gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE;
         gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE;
     }
+	else if (gimbal_behaviour == GIMBAL_TEST_YAW_SPEED)   //Added by NERanger 20190410
+	{
+		gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_SPD;
+        gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_NO_FORCE;
+	}
+	else if (gimbal_behaviour == GIMBAL_TEST_YAW_POS_M3508)   //Added by NERanger 20190411
+	{
+		
+	}
 }
 
 /**
@@ -212,14 +221,21 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, Gimbal_Control
 
     static fp32 rc_add_yaw, rc_add_pit;
     static int16_t yaw_channel = 0, pitch_channel = 0;
+	
+	static fp32 rc_spd_set;  //Added by NERanger 20190410
 
     //将遥控器的数据处理死区 int16_t yaw_channel,pitch_channel
     rc_deadline_limit(gimbal_control_set->gimbal_rc_ctrl->rc.ch[YawChannel], yaw_channel, RC_deadband);
     rc_deadline_limit(gimbal_control_set->gimbal_rc_ctrl->rc.ch[PitchChannel], pitch_channel, RC_deadband);
 
+	
     rc_add_yaw = yaw_channel * Yaw_RC_SEN - gimbal_control_set->gimbal_rc_ctrl->mouse.x * Yaw_Mouse_Sen;
     rc_add_pit = pitch_channel * Pitch_RC_SEN + gimbal_control_set->gimbal_rc_ctrl->mouse.y * Pitch_Mouse_Sen;
 
+	rc_spd_set = yaw_channel * YAW_TEST_SPD_RC_FAC;
+	//Added by NERanger 20190411
+	
+	
     if (gimbal_behaviour == GIMBAL_ZERO_FORCE)
     {
         gimbal_zero_force_control(&rc_add_yaw, &rc_add_pit, gimbal_control_set);
@@ -244,6 +260,11 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, Gimbal_Control
     {
         gimbal_motionless_control(&rc_add_yaw, &rc_add_pit, gimbal_control_set);
     }
+	else if (gimbal_behaviour == GIMBAL_TEST_YAW_SPEED)
+	{
+		rc_add_yaw = rc_spd_set;
+		rc_add_pit = 0.0f;
+	}
     //将控制增加量赋值
     *add_yaw = rc_add_yaw;
     *add_pitch = rc_add_pit;
@@ -355,7 +376,7 @@ static void gimbal_behavour_set(Gimbal_Control_t *gimbal_mode_set)
     }
     else if (switch_is_mid(gimbal_mode_set->gimbal_rc_ctrl->rc.s[ModeChannel]))
     {
-        gimbal_behaviour = GIMBAL_ZERO_FORCE;
+        gimbal_behaviour = GIMBAL_TEST_YAW_POS_M3508;
     }
     else if (switch_is_up(gimbal_mode_set->gimbal_rc_ctrl->rc.s[ModeChannel]))
     {
@@ -369,14 +390,15 @@ static void gimbal_behavour_set(Gimbal_Control_t *gimbal_mode_set)
     }
 
     //判断进入init状态机
-    {
-        static gimbal_behaviour_e last_gimbal_behaviour = GIMBAL_ZERO_FORCE;
-        if (last_gimbal_behaviour == GIMBAL_ZERO_FORCE && gimbal_behaviour != GIMBAL_ZERO_FORCE)
-        {
-            gimbal_behaviour = GIMBAL_INIT;
-        }
-        last_gimbal_behaviour = gimbal_behaviour;
-    }
+//    {
+//        static gimbal_behaviour_e last_gimbal_behaviour = GIMBAL_ZERO_FORCE;
+//        if (last_gimbal_behaviour == GIMBAL_ZERO_FORCE && gimbal_behaviour != GIMBAL_ZERO_FORCE)
+//        {
+//            gimbal_behaviour = GIMBAL_INIT;
+//        }
+//        last_gimbal_behaviour = gimbal_behaviour;
+//    }
+	
 
     static uint16_t motionless_time = 0;
     if (gimbal_behaviour == GIMBAL_ABSOLUTE_ANGLE)
@@ -596,3 +618,4 @@ static void gimbal_motionless_control(fp32 *yaw, fp32 *pitch, Gimbal_Control_t *
     *yaw = 0.0f;
     *pitch = 0.0f;
 }
+

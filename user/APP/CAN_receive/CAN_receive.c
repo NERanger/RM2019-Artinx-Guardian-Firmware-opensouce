@@ -37,15 +37,25 @@
     }
 
 //云台电机数据读取
+//#define get_gimbal_motor_measuer(ptr, rx_message)                                              \
+//    {                                                                                          \
+//        (ptr)->last_ecd = (ptr)->ecd;                                                          \
+//        (ptr)->ecd = (uint16_t)((rx_message)->Data[0] << 8 | (rx_message)->Data[1]);           \
+//        (ptr)->given_current = (uint16_t)((rx_message)->Data[2] << 8 | (rx_message)->Data[3]); \
+//        (ptr)->speed_rpm = (uint16_t)((rx_message)->Data[4] << 8 | (rx_message)->Data[5]);     \
+//        (ptr)->temperate = (rx_message)->Data[6];                                              \
+//    }
+
+//Modified by NERanger 20190411
 #define get_gimbal_motor_measuer(ptr, rx_message)                                              \
     {                                                                                          \
         (ptr)->last_ecd = (ptr)->ecd;                                                          \
         (ptr)->ecd = (uint16_t)((rx_message)->Data[0] << 8 | (rx_message)->Data[1]);           \
-        (ptr)->given_current = (uint16_t)((rx_message)->Data[2] << 8 | (rx_message)->Data[3]); \
-        (ptr)->speed_rpm = (uint16_t)((rx_message)->Data[4] << 8 | (rx_message)->Data[5]);     \
+        (ptr)->speed_rpm = (uint16_t)((rx_message)->Data[2] << 8 | (rx_message)->Data[3]);     \
+        (ptr)->given_current = (uint16_t)((rx_message)->Data[4] << 8 | (rx_message)->Data[5]); \
         (ptr)->temperate = (rx_message)->Data[6];                                              \
-    }
-
+    }	
+	
 //统一处理can接收函数
 static void CAN_hook(CanRxMsg *rx_message);
 //声明电机变量

@@ -25,6 +25,10 @@
 #include "pid.h"
 #include "remote_control.h"
 
+//yaw速度环控制比例
+#define YAW_TEST_SPD_RC_FAC 0.0005f
+//Added by NERanger 20190410
+
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
 #define PITCH_SPEED_PID_KP 2000.0f
 #define PITCH_SPEED_PID_KI 20.0f
@@ -142,6 +146,10 @@ typedef enum
     GIMBAL_MOTOR_RAW = 0, //电机原始值控制
     GIMBAL_MOTOR_GYRO,    //电机陀螺仪角度控制
     GIMBAL_MOTOR_ENCONDE, //电机编码值角度控制
+	
+	//Added by NERanger 20190410
+	GIMBAL_MOTOR_SPD,      //电机速度环控制（仅供测试）
+	GIMBAL_MOTOR_NO_FORCE  //电机无力
 } gimbal_motor_mode_e;
 
 typedef struct
@@ -169,6 +177,7 @@ typedef struct
     const motor_measure_t *gimbal_motor_measure;
     Gimbal_PID_t gimbal_motor_absolute_angle_pid;
     Gimbal_PID_t gimbal_motor_relative_angle_pid;
+	PidTypeDef gimbal_motor_test_spd_pid;    // Added by NERanger 20190410
     PidTypeDef gimbal_motor_gyro_pid;
     gimbal_motor_mode_e gimbal_motor_mode;
     gimbal_motor_mode_e last_gimbal_motor_mode;
@@ -184,6 +193,7 @@ typedef struct
     fp32 motor_gyro_set;
     fp32 motor_speed;
     fp32 raw_cmd_current;
+	fp32 raw_cmd_spd;     //Added by NERanger 20190410
     fp32 current_set;
     int16_t given_current;
 
