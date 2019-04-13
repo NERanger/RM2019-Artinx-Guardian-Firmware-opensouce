@@ -197,9 +197,10 @@ void gimbal_behaviour_mode_set(Gimbal_Control_t *gimbal_mode_set)
 		gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_SPD;
         gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_NO_FORCE;
 	}
-	else if (gimbal_behaviour == GIMBAL_TEST_YAW_POS_M3508)   //Added by NERanger 20190411
+	else if (gimbal_behaviour == GIMBAL_YAW_POS_M3508)   //Added by NERanger 20190411
 	{
-		
+		gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE_M3508;
+		gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_NO_FORCE;
 	}
 }
 
@@ -263,6 +264,11 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, Gimbal_Control
 	else if (gimbal_behaviour == GIMBAL_TEST_YAW_SPEED)
 	{
 		rc_add_yaw = rc_spd_set;
+		rc_add_pit = 0.0f;
+	}
+	else if (gimbal_behaviour == GIMBAL_YAW_POS_M3508)
+	{
+		gimbal_relative_angle_control(&rc_add_yaw, &rc_add_pit, gimbal_control_set);
 		rc_add_pit = 0.0f;
 	}
     //将控制增加量赋值
@@ -376,7 +382,7 @@ static void gimbal_behavour_set(Gimbal_Control_t *gimbal_mode_set)
     }
     else if (switch_is_mid(gimbal_mode_set->gimbal_rc_ctrl->rc.s[ModeChannel]))
     {
-        gimbal_behaviour = GIMBAL_TEST_YAW_POS_M3508;
+        gimbal_behaviour = GIMBAL_YAW_POS_M3508;
     }
     else if (switch_is_up(gimbal_mode_set->gimbal_rc_ctrl->rc.s[ModeChannel]))
     {

@@ -163,6 +163,19 @@ void chassis_behaviour_mode_set(chassis_move_t *chassis_move_mode)
 		//Added by NERanger 20190408
 	}
 }
+
+void chassis_DBUSoffline_behaviour_mode_set(chassis_move_t *chassis_move_mode)
+{
+	if (chassis_move_mode == NULL)
+    {
+        return;
+    }
+	
+	chassis_behaviour_mode = CHASSIS_GUARDIAN_AUTO_PATROL;
+	
+	chassis_move_mode->chassis_mode = CHASSIS_VECTOR_AUTO_PATROL;
+}
+
 void chassis_behaviour_control_set(fp32 *vx_set, fp32 *vy_set, fp32 *angle_set, chassis_move_t *chassis_move_rc_to_vector)
 {
 

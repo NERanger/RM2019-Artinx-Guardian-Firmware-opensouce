@@ -22,6 +22,11 @@
 #include "pid.h"
 #include "Remote_Control.h"
 #include "user_lib.h"
+
+//Added by NERanger 20190412
+#define GUARDIAN_PATROL_PERIOD 3000
+
+
 //任务开始空闲一段时间
 #define CHASSIS_TASK_INIT_TIME 357
 

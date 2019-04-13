@@ -66,6 +66,7 @@ guardian_collision_state  guard_collision_flag = GUARDIAN_COLLISION_FALSE;
 	
 fp32 debug_vx_set = 0;
 chassis_move_t debug_chassis_move;
+uint32_t patrol_start_time = 0;
 //Added by NERanger 20190409
 	
 #if INCLUDE_uxTaskGetStackHighWaterMark
@@ -80,11 +81,17 @@ void chassis_task(void *pvParameters)
     //底盘初始化
     chassis_init(&chassis_move);
     //判断底盘电机是否都在线
-    while (toe_is_error(ChassisMotor1TOE) || toe_is_error(ChassisMotor2TOE) || toe_is_error(DBUSTOE))
-    {
-        vTaskDelay(CHASSIS_CONTROL_TIME_MS);
-    }
-
+//    while (toe_is_error(ChassisMotor1TOE) || toe_is_error(ChassisMotor2TOE) || toe_is_error(DBUSTOE))
+//    {
+//        vTaskDelay(CHASSIS_CONTROL_TIME_MS);
+//    }
+	while (toe_is_error(ChassisMotor1TOE) || toe_is_error(ChassisMotor2TOE))  // Modified by NERanger 20190412
+	{
+		vTaskDelay(CHASSIS_CONTROL_TIME_MS);
+	}
+	
+	patrol_start_time = xTaskGetTickCount();  //进入循环前记录开始时间
+	//Added by NERanger 20190412
     while (1)
     {
         //遥控器设置状态
@@ -93,6 +100,13 @@ void chassis_task(void *pvParameters)
         chassis_mode_change_control_transit(&chassis_move);
         //底盘数据更新
         chassis_feedback_update(&chassis_move);
+		
+		if(xTaskGetTickCount() - patrol_start_time > GUARDIAN_PATROL_PERIOD)
+		{
+			guard_collision_flag = GUARDIAN_COLLISION_TRUE;
+			
+			patrol_start_time = xTaskGetTickCount();
+		}
         
 		if(guard_collision_flag == GUARDIAN_COLLISION_TRUE)  //产生碰撞后改变巡航方向
 		{
@@ -185,8 +199,15 @@ static void chassis_set_mode(chassis_move_t *chassis_move_mode)
     {
         return;
     }
-
-    chassis_behaviour_mode_set(chassis_move_mode);
+	
+	if(toe_is_error(DBUSTOE))  // Modified by NERanger 20190412
+	{
+		chassis_DBUSoffline_behaviour_mode_set(chassis_move_mode);
+	}
+	else
+	{
+		chassis_behaviour_mode_set(chassis_move_mode);
+	}
 }
 
 static void chassis_mode_change_control_transit(chassis_move_t *chassis_move_transit)

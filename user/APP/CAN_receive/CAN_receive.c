@@ -208,6 +208,8 @@ static void CAN_hook(CanRxMsg *rx_message)
     {
         //处理电机数据宏函数
         get_gimbal_motor_measuer(&motor_yaw, rx_message);
+		
+		get_total_ecd(&motor_yaw);
         //记录时间
         DetectHook(YawGimbalMotorTOE);
         break;
@@ -247,4 +249,28 @@ static void CAN_hook(CanRxMsg *rx_message)
         break;
     }
     }
+}
+
+//Added by NERanger 20190413
+void get_total_ecd(motor_measure_t *p)
+{
+	
+	int res1, res2, delta;
+	if(p->ecd < p->last_ecd){			//可能的情况
+		res1 = p->ecd + 8192 - p->last_ecd;	//正转，delta=+
+		res2 = p->ecd - p->last_ecd;				//反转	delta=-
+	}
+	else
+	{	//angle > last
+		res1 = p->ecd - 8192 - p->last_ecd ;//反转	delta -
+		res2 = p->ecd - p->last_ecd;				//正转	delta +
+	}
+	//不管正反转，肯定是转的角度小的那个是真的
+	if(int_abs(res1) < int_abs(res2))
+		delta = res1;
+	else
+		delta = res2;
+
+	p->total_ecd += delta;
+	p->last_ecd = p->ecd;
 }

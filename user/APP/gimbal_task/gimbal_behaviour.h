@@ -13,7 +13,7 @@ typedef enum
   GIMBAL_MOTIONLESS,     //云台在遥控器无输入一段时间后保持不动，避免陀螺仪漂移
 	
   GIMBAL_TEST_YAW_SPEED,  //云台YAW轴速度环测试
-  GIMBAL_TEST_YAW_POS_M3508    //云台YAW轴位置环测试
+  GIMBAL_YAW_POS_M3508    //云台YAW轴位置环测试
 } gimbal_behaviour_e;
 
 extern void gimbal_behaviour_mode_set(Gimbal_Control_t *gimbal_mode_set);

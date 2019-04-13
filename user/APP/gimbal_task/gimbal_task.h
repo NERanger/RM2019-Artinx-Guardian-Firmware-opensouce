@@ -25,6 +25,15 @@
 #include "pid.h"
 #include "remote_control.h"
 
+#define MAX_RELATIVE_ANGLE_MANUAL_SET 1.5f
+#define MIN_RELATIVE_ANGLE_MANUAL_SET -1.5f
+//Added by NERanger 20190413
+
+#define REDUCTION_RATIO_FAC 19.0f
+#define ONE_ROUND_ECD_WITH_REDUCTION (8192*19)
+#define ONE_ROUND_ECD 8192u
+//Added by NERanger 20190413
+
 //yaw速度环控制比例
 #define YAW_TEST_SPD_RC_FAC 0.0005f
 //Added by NERanger 20190410
@@ -67,7 +76,8 @@
 #define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 0.0f
 
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define YAW_ENCODE_RELATIVE_PID_KP 8.0f
+//#define YAW_ENCODE_RELATIVE_PID_KP 8.0f
+#define YAW_ENCODE_RELATIVE_PID_KP 0.5f
 #define YAW_ENCODE_RELATIVE_PID_KI 0.0f
 #define YAW_ENCODE_RELATIVE_PID_KD 0.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_OUT 10.0f
@@ -148,6 +158,7 @@ typedef enum
     GIMBAL_MOTOR_ENCONDE, //电机编码值角度控制
 	
 	//Added by NERanger 20190410
+	GIMBAL_MOTOR_ENCONDE_M3508,  //3508编码值位置环控制
 	GIMBAL_MOTOR_SPD,      //电机速度环控制（仅供测试）
 	GIMBAL_MOTOR_NO_FORCE  //电机无力
 } gimbal_motor_mode_e;
@@ -177,8 +188,11 @@ typedef struct
     const motor_measure_t *gimbal_motor_measure;
     Gimbal_PID_t gimbal_motor_absolute_angle_pid;
     Gimbal_PID_t gimbal_motor_relative_angle_pid;
+	
 	PidTypeDef gimbal_motor_test_spd_pid;    // Added by NERanger 20190410
-    PidTypeDef gimbal_motor_gyro_pid;
+	//Gimbal_PID_t gimbal_motor_test_m3508_pos_pid;  //Added by NERanger 20190411
+    
+	PidTypeDef gimbal_motor_gyro_pid;
     gimbal_motor_mode_e gimbal_motor_mode;
     gimbal_motor_mode_e last_gimbal_motor_mode;
     uint16_t offset_ecd;
@@ -192,6 +206,7 @@ typedef struct
     fp32 motor_gyro;         //rad/s
     fp32 motor_gyro_set;
     fp32 motor_speed;
+	fp32 motor_speed_set;   //Added by NERanger 20190410
     fp32 raw_cmd_current;
 	fp32 raw_cmd_spd;     //Added by NERanger 20190410
     fp32 current_set;

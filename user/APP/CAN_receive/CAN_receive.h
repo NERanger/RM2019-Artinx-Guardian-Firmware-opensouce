@@ -24,6 +24,9 @@
 
 #define GIMBAL_CAN CAN1
 
+#define int_abs(x) ((x) > 0 ? (x) : (-x))
+//Added by NERanger 20190413
+
 /* CAN send and receive ID */
 typedef enum
 {
@@ -48,6 +51,8 @@ typedef struct
     int16_t given_current;
     uint8_t temperate;
     int16_t last_ecd;
+	
+	int32_t total_ecd;  //Added by NERanger 20190413
 } motor_measure_t;
 
 extern void CAN_CMD_CHASSIS_RESET_ID(void);
@@ -64,6 +69,9 @@ extern const motor_measure_t *get_Pitch_Gimbal_Motor_Measure_Point(void);
 extern const motor_measure_t *get_Trigger_Motor_Measure_Point(void);
 //返回底盘电机变量地址，通过指针方式获取原始数据,i的范围是0-3，对应0x201-0x204,
 extern const motor_measure_t *get_Chassis_Motor_Measure_Point(uint8_t i);
+
+void get_total_ecd(motor_measure_t *p);
+//Added by NERanger 20190413
 
 #if GIMBAL_MOTOR_6020_CAN_LOSE_SLOVE
 extern void GIMBAL_lose_slove(void);
