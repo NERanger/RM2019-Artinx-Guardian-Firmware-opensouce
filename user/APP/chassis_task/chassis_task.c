@@ -104,12 +104,12 @@ void chassis_task(void *pvParameters)
         chassis_feedback_update(&chassis_move);
 		
 		//延时改变巡逻方向，应在使用传感器后注释该段程序
-		if(xTaskGetTickCount() - patrol_start_time > GUARDIAN_PATROL_PERIOD)
-		{
-			guard_collision_flag = GUARDIAN_COLLISION_TRUE;
-			
-			patrol_start_time = xTaskGetTickCount();
-		}
+//		if(xTaskGetTickCount() - patrol_start_time > GUARDIAN_PATROL_PERIOD)
+//		{
+//			guard_collision_flag = GUARDIAN_COLLISION_TRUE;
+//			
+//			patrol_start_time = xTaskGetTickCount();
+//		}
         
 		if(guard_collision_flag == GUARDIAN_COLLISION_TRUE)  //产生碰撞后改变巡航方向
 		{

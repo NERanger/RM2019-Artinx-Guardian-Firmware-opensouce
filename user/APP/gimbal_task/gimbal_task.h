@@ -35,7 +35,8 @@
 //Added by NERanger 20190413
 
 //yaw速度环控制比例
-#define YAW_TEST_SPD_RC_FAC 0.0005f
+#define YAW_SPD_RC_FAC 0.00005f
+#define PITCH_SPD_RC_FAC 0.00005
 //Added by NERanger 20190410
 
 //pitch 速度环 PID参数以及 PID最大输出，积分输出

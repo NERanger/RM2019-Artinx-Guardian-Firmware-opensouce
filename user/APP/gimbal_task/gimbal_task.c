@@ -492,6 +492,11 @@ static void GIMBAL_Mode_Change_Control_Transit(Gimbal_Control_t *gimbal_mode_cha
     {
         gimbal_mode_change->gimbal_yaw_motor.relative_angle_set = gimbal_mode_change->gimbal_yaw_motor.relative_angle;
     }
+	//Added by NERanger 20190419
+	else if (gimbal_mode_change->gimbal_yaw_motor.last_gimbal_motor_mode != GIMBAL_MOTOR_SPD && gimbal_mode_change->gimbal_yaw_motor.gimbal_motor_mode == GIMBAL_MOTOR_SPD)
+	{
+		gimbal_mode_change->gimbal_yaw_motor.motor_speed_set = 0;
+	}
     gimbal_mode_change->gimbal_yaw_motor.last_gimbal_motor_mode = gimbal_mode_change->gimbal_yaw_motor.gimbal_motor_mode;
 
     //pitch电机状态机切换保存数据
@@ -506,6 +511,11 @@ static void GIMBAL_Mode_Change_Control_Transit(Gimbal_Control_t *gimbal_mode_cha
     else if (gimbal_mode_change->gimbal_pitch_motor.last_gimbal_motor_mode != GIMBAL_MOTOR_ENCONDE && gimbal_mode_change->gimbal_pitch_motor.gimbal_motor_mode == GIMBAL_MOTOR_ENCONDE)
     {
         gimbal_mode_change->gimbal_pitch_motor.relative_angle_set = gimbal_mode_change->gimbal_pitch_motor.relative_angle;
+    }
+	//Added by NERanger 20190419
+	else if (gimbal_mode_change->gimbal_pitch_motor.last_gimbal_motor_mode != GIMBAL_MOTOR_SPD && gimbal_mode_change->gimbal_pitch_motor.gimbal_motor_mode == GIMBAL_MOTOR_SPD)
+    {
+        gimbal_mode_change->gimbal_pitch_motor.motor_speed_set = 0;
     }
 
     gimbal_mode_change->gimbal_pitch_motor.last_gimbal_motor_mode = gimbal_mode_change->gimbal_pitch_motor.gimbal_motor_mode;
@@ -702,6 +712,10 @@ static void GIMBAL_Control_loop(Gimbal_Control_t *gimbal_control_loop)
 	else if (gimbal_control_loop->gimbal_pitch_motor.gimbal_motor_mode == GIMBAL_MOTOR_NO_FORCE)
 	{
 		gimbal_motor_no_force_control(&gimbal_control_loop->gimbal_pitch_motor);
+	}
+	else if (gimbal_control_loop->gimbal_pitch_motor.gimbal_motor_mode == GIMBAL_MOTOR_SPD)   //Added by NERanger 20190419
+	{
+		gimbal_motor_test_spd_control(&gimbal_control_loop->gimbal_pitch_motor);
 	}
 }
 

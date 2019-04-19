@@ -11,6 +11,7 @@ typedef enum
   GIMBAL_ABSOLUTE_ANGLE, //云台陀螺仪绝对角度控制
   GIMBAL_RELATIVE_ANGLE, //云台电机编码值相对角度控制
   GIMBAL_MOTIONLESS,     //云台在遥控器无输入一段时间后保持不动，避免陀螺仪漂移
+  GIMBAL_SPD,            //云台电机速度环控制
 	
   GIMBAL_TEST_YAW_SPEED,  //云台YAW轴速度环测试
   GIMBAL_YAW_POS_M3508    //云台YAW轴位置环测试

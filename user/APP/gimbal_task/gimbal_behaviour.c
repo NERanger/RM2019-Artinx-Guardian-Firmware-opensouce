@@ -204,6 +204,11 @@ void gimbal_behaviour_mode_set(Gimbal_Control_t *gimbal_mode_set)
 		gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE_M3508;
 		gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_NO_FORCE;
 	}
+	else if (gimbal_behaviour == GIMBAL_SPD)  //Added by NERanger 20190419
+	{
+		gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_SPD;
+		gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_SPD;
+	}
 }
 
 /**
@@ -225,7 +230,7 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, Gimbal_Control
     static fp32 rc_add_yaw, rc_add_pit;
     static int16_t yaw_channel = 0, pitch_channel = 0;
 	
-	static fp32 rc_spd_set;  //Added by NERanger 20190410
+	static fp32 rc_spd_yaw_set, rc_spd_pit_set;  //Added by NERanger 20190410
 
     //将遥控器的数据处理死区 int16_t yaw_channel,pitch_channel
     rc_deadline_limit(gimbal_control_set->gimbal_rc_ctrl->rc.ch[YawChannel], yaw_channel, RC_deadband);
@@ -235,8 +240,9 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, Gimbal_Control
     rc_add_yaw = yaw_channel * Yaw_RC_SEN - gimbal_control_set->gimbal_rc_ctrl->mouse.x * Yaw_Mouse_Sen;
     rc_add_pit = pitch_channel * Pitch_RC_SEN + gimbal_control_set->gimbal_rc_ctrl->mouse.y * Pitch_Mouse_Sen;
 
-	rc_spd_set = yaw_channel * YAW_TEST_SPD_RC_FAC;
-	//Added by NERanger 20190411
+	rc_spd_yaw_set = yaw_channel * YAW_SPD_RC_FAC;
+	rc_spd_pit_set = pitch_channel * PITCH_SPD_RC_FAC;
+	//Modified by NERanger 20190419
 	
 	
     if (gimbal_behaviour == GIMBAL_ZERO_FORCE)
@@ -265,13 +271,18 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, Gimbal_Control
     }
 	else if (gimbal_behaviour == GIMBAL_TEST_YAW_SPEED)
 	{
-		rc_add_yaw = rc_spd_set;
+		rc_add_yaw = rc_spd_yaw_set;
 		rc_add_pit = 0.0f;
 	}
 	else if (gimbal_behaviour == GIMBAL_YAW_POS_M3508)
 	{
 		gimbal_relative_angle_control(&rc_add_yaw, &rc_add_pit, gimbal_control_set);
 		rc_add_pit = 0.0f;
+	}
+	else if (gimbal_behaviour == GIMBAL_SPD)  //Added by NERanger 20190419
+	{
+		rc_add_yaw = rc_spd_yaw_set;
+		rc_add_pit = rc_spd_pit_set;
 	}
     //将控制增加量赋值
     *add_yaw = rc_add_yaw;
