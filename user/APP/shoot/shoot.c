@@ -46,9 +46,13 @@
 static const RC_ctrl_t *shoot_rc; //遥控器指针
 
 static PidTypeDef trigger_motor_pid;         //电机PID
-static Shoot_Motor_t trigger_motor;          //射击数据
+ static Shoot_Motor_t trigger_motor;          //射击数据
 static shoot_mode_e shoot_mode = SHOOT_STOP; //射击状态机
 //微动开关IO
+
+Shoot_Motor_t debug_trigger_motor;
+//Added by NERanger 20190414
+
 #define Butten_Trig_Pin GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_10)
 
 extern void getTriggerMotorMeasure(motor_measure_t *motor);
@@ -219,6 +223,8 @@ int16_t shoot_control_loop(void)
         shoot_CAN_Set_Current = trigger_motor.given_current;
     }
 
+	debug_trigger_motor = trigger_motor;
+	
     return shoot_CAN_Set_Current;
 }
 

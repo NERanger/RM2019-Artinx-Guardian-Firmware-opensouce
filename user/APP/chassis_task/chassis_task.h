@@ -111,11 +111,11 @@
 #define GUARDIAN_PATROL_SPD 1
 //Added by NERanger 20190408
 
-typedef enum
-{
-	GUARDIAN_COLLISION_FALSE = 0,
-	GUARDIAN_COLLISION_TRUE = 1
-} guardian_collision_state;
+//typedef enum
+//{
+//	GUARDIAN_COLLISION_FALSE = 0,
+//	GUARDIAN_COLLISION_TRUE = 1
+//} guardian_collision_state;
 
 typedef enum
 {

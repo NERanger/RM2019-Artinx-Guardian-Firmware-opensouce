@@ -27,6 +27,7 @@
 #include "INS_Task.h"
 #include "Chassis_Task.h"
 #include "Gimbal_Task.h"
+#include "collision_detection_task.h"
 
 #define INS_TASK_PRIO 20
 #define INS_TASK_SIZE 512
@@ -55,6 +56,11 @@ static TaskHandle_t CalibrateTask_Handler;
 #define Detect_TASK_PRIO 10
 #define Detect_STK_SIZE 512
 static TaskHandle_t DetectTask_Handler;
+
+//Added by NERanger 20190419
+#define COLLISION_DETECTION_TASK_PRIO 17
+#define COLLISION_DETECTION_STK_SIZE 256
+static TaskHandle_t CollisionDetectionTask_Handler;
 
 void start_task(void *pvParameters)
 {
@@ -101,6 +107,14 @@ void start_task(void *pvParameters)
                 (void *)NULL,
                 (UBaseType_t)Detect_TASK_PRIO,
                 (TaskHandle_t *)&DetectTask_Handler);
+				
+	//Added by NERanger 20190419
+	xTaskCreate((TaskFunction_t)collision_detection_task,
+                (const char *)"CollisionDetectionTask",
+                (uint16_t)COLLISION_DETECTION_STK_SIZE,
+                (void *)NULL,
+                (UBaseType_t)COLLISION_DETECTION_TASK_PRIO,
+                (TaskHandle_t *)&CollisionDetectionTask_Handler);
 
     vTaskDelete(StartTask_Handler); //删除开始任务
     taskEXIT_CRITICAL();            //退出临界区

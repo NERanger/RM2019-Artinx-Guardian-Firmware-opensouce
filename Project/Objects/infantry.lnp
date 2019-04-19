@@ -76,6 +76,8 @@
 ".\objects\spi.o"
 ".\objects\sys.o"
 ".\objects\timer.o"
+".\objects\ranging.o"
+".\objects\collision.o"
 ".\objects\calibrate_task.o"
 ".\objects\can_receive.o"
 ".\objects\chassis_behaviour.o"
@@ -90,6 +92,7 @@
 ".\objects\shoot.o"
 ".\objects\start_task.o"
 ".\objects\user_task.o"
+".\objects\collision_detection_task.o"
 --strict --scatter ".\Objects\infantry.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

@@ -167,9 +167,11 @@ void gimbal_behaviour_mode_set(Gimbal_Control_t *gimbal_mode_set)
         gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_RAW;
         gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_RAW;
     }
-    else if (gimbal_behaviour == GIMBAL_INIT)
+    else if (gimbal_behaviour == GIMBAL_INIT)  //Modified by NERanger 20190417
     {
-        gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE;
+//        gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE;
+		
+		gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE_M3508;
         gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE;
     }
     else if (gimbal_behaviour == GIMBAL_CALI)
@@ -182,9 +184,9 @@ void gimbal_behaviour_mode_set(Gimbal_Control_t *gimbal_mode_set)
         gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_GYRO;
         gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_GYRO;
     }
-    else if (gimbal_behaviour == GIMBAL_RELATIVE_ANGLE)
+    else if (gimbal_behaviour == GIMBAL_RELATIVE_ANGLE)   //Modified by NERanger 20190417
     {
-        gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE;
+        gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE_M3508;
         gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE;
     }
     else if (gimbal_behaviour == GIMBAL_MOTIONLESS)
@@ -344,8 +346,12 @@ static void gimbal_behavour_set(Gimbal_Control_t *gimbal_mode_set)
         static uint16_t init_stop_time = 0;
         init_time++;
         //到达中值 计时
-        if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR &&
-             fabs(gimbal_mode_set->gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR))
+//        if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR &&
+//             fabs(gimbal_mode_set->gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR))
+		
+		//Modified by NERanger 20190417
+		if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR &&
+             fabs(gimbal_mode_set->gimbal_pitch_motor.relative_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR))
         {
             //到达初始化位置
             if (init_stop_time < GIMBAL_INIT_STOP_TIME)
@@ -382,7 +388,7 @@ static void gimbal_behavour_set(Gimbal_Control_t *gimbal_mode_set)
     }
     else if (switch_is_mid(gimbal_mode_set->gimbal_rc_ctrl->rc.s[ModeChannel]))
     {
-        gimbal_behaviour = GIMBAL_YAW_POS_M3508;
+        gimbal_behaviour = GIMBAL_RELATIVE_ANGLE;
     }
     else if (switch_is_up(gimbal_mode_set->gimbal_rc_ctrl->rc.s[ModeChannel]))
     {
@@ -396,14 +402,14 @@ static void gimbal_behavour_set(Gimbal_Control_t *gimbal_mode_set)
     }
 
     //判断进入init状态机
-//    {
-//        static gimbal_behaviour_e last_gimbal_behaviour = GIMBAL_ZERO_FORCE;
-//        if (last_gimbal_behaviour == GIMBAL_ZERO_FORCE && gimbal_behaviour != GIMBAL_ZERO_FORCE)
-//        {
-//            gimbal_behaviour = GIMBAL_INIT;
-//        }
-//        last_gimbal_behaviour = gimbal_behaviour;
-//    }
+    {
+        static gimbal_behaviour_e last_gimbal_behaviour = GIMBAL_ZERO_FORCE;
+        if (last_gimbal_behaviour == GIMBAL_ZERO_FORCE && gimbal_behaviour != GIMBAL_ZERO_FORCE)
+        {
+            gimbal_behaviour = GIMBAL_INIT;
+        }
+        last_gimbal_behaviour = gimbal_behaviour;
+    }
 	
 
     static uint16_t motionless_time = 0;
@@ -469,14 +475,25 @@ static void gimbal_init_control(fp32 *yaw, fp32 *pitch, Gimbal_Control_t *gimbal
     }
 
     //初始化状态控制量计算
-    if (fabs(INIT_PITCH_SET - gimbal_control_set->gimbal_pitch_motor.absolute_angle) > GIMBAL_INIT_ANGLE_ERROR)
+//    if (fabs(INIT_PITCH_SET - gimbal_control_set->gimbal_pitch_motor.absolute_angle) > GIMBAL_INIT_ANGLE_ERROR)
+//    {
+//        *pitch = (INIT_PITCH_SET - gimbal_control_set->gimbal_pitch_motor.absolute_angle) * GIMBAL_INIT_PITCH_SPEED;
+//        *yaw = 0.0f;
+//    }
+//    else
+//    {
+//        *pitch = (INIT_PITCH_SET - gimbal_control_set->gimbal_pitch_motor.absolute_angle) * GIMBAL_INIT_PITCH_SPEED;
+//        *yaw = (INIT_YAW_SET - gimbal_control_set->gimbal_yaw_motor.relative_angle) * GIMBAL_INIT_YAW_SPEED;
+//    }
+	
+	if (fabs(INIT_PITCH_SET - gimbal_control_set->gimbal_pitch_motor.relative_angle) > GIMBAL_INIT_ANGLE_ERROR)
     {
-        *pitch = (INIT_PITCH_SET - gimbal_control_set->gimbal_pitch_motor.absolute_angle) * GIMBAL_INIT_PITCH_SPEED;
+        *pitch = (INIT_PITCH_SET - gimbal_control_set->gimbal_pitch_motor.relative_angle) * GIMBAL_INIT_PITCH_SPEED;
         *yaw = 0.0f;
     }
     else
     {
-        *pitch = (INIT_PITCH_SET - gimbal_control_set->gimbal_pitch_motor.absolute_angle) * GIMBAL_INIT_PITCH_SPEED;
+        *pitch = (INIT_PITCH_SET - gimbal_control_set->gimbal_pitch_motor.relative_angle) * GIMBAL_INIT_PITCH_SPEED;
         *yaw = (INIT_YAW_SET - gimbal_control_set->gimbal_yaw_motor.relative_angle) * GIMBAL_INIT_YAW_SPEED;
     }
 }

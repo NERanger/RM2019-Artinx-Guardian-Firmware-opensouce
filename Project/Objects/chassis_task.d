@@ -26,5 +26,7 @@
 .\objects\chassis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\chassis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\chassis_task.o: ..\User\APP\Detect_Task\Detect_Task.h
+.\objects\chassis_task.o: ..\user\APP\collision_detection_task\collision_detection_task.h
+.\objects\chassis_task.o: ..\user\hardware\collision\collision.h
 .\objects\chassis_task.o: ..\User\APP\INS_Task\INS_Task.h
 .\objects\chassis_task.o: ..\user\APP\chassis_task\chassis_behaviour.h

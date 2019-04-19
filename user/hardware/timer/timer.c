@@ -58,6 +58,38 @@ void TIM1_Init(uint16_t arr, uint16_t psc)
     TIM_Cmd(TIM1, ENABLE);
 }
 
+//Added by NERanger 20190417
+void TIM2_Init(uint32_t arr, uint16_t psc)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+	TIM_ICInitTypeDef TIM_ICInitStructure;
+	
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+	
+	GPIO_InitStructure.GPIO_Pin = RANGINGa_ECHO_Pin;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_Init(RANGINGa_ECHO_GPIO_Port, &GPIO_InitStructure);
+	GPIO_ResetBits(RANGINGa_ECHO_GPIO_Port, RANGINGa_ECHO_Pin);
+	
+	TIM_TimeBaseInitStructure.TIM_Period = arr - 1;
+    TIM_TimeBaseInitStructure.TIM_Prescaler = psc - 1;
+    TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_TimeBaseInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseInitStructure);
+	
+	TIM_ICInitStructure.TIM_Channel = TIM_Channel_2;
+	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
+	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
+	TIM_ICInitStructure.TIM_ICFilter = 0x00;
+	TIM_ICInit(TIM2, &TIM_ICInitStructure);
+	
+	TIM_Cmd(TIM2, ENABLE);
+}
+
 void TIM3_Init(uint16_t arr, uint16_t psc)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
@@ -106,6 +138,38 @@ void TIM3_Init(uint16_t arr, uint16_t psc)
     TIM_ARRPreloadConfig(TIM3, ENABLE);
 
     TIM_Cmd(TIM3, ENABLE);
+}
+
+//Added by NERanger 20190417
+void TIM5_Init(uint32_t arr, uint16_t psc)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+	TIM_ICInitTypeDef TIM_ICInitStructure;
+	
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+	
+	GPIO_InitStructure.GPIO_Pin = RANGINGb_ECHO_Pin;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_Init(RANGINGb_ECHO_GPIO_Port, &GPIO_InitStructure);
+	GPIO_ResetBits(RANGINGb_ECHO_GPIO_Port, RANGINGb_ECHO_Pin);
+	
+	TIM_TimeBaseInitStructure.TIM_Period = arr - 1;
+    TIM_TimeBaseInitStructure.TIM_Prescaler = psc - 1;
+    TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_TimeBaseInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseInit(TIM5, &TIM_TimeBaseInitStructure);
+	
+	TIM_ICInitStructure.TIM_Channel = TIM_Channel_1;
+	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
+	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
+	TIM_ICInitStructure.TIM_ICFilter = 0x00;
+	TIM_ICInit(TIM5, &TIM_ICInitStructure);
+	
+	TIM_Cmd(TIM5, ENABLE);
 }
 
 void TIM6_Init(uint16_t arr, uint16_t psc)

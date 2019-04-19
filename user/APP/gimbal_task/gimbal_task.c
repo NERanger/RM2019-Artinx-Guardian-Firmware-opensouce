@@ -160,7 +160,7 @@ void GIMBAL_task(void *pvParameters)
             {
 				debug_gimbal_control = gimbal_control;
                 //CAN_CMD_GIMBAL(Yaw_Can_Set_Current, Pitch_Can_Set_Current, Shoot_Can_Set_Current, 0);
-				CAN_CMD_GIMBAL(Yaw_Can_Set_Current, 0, 0, 0);
+				CAN_CMD_GIMBAL(Yaw_Can_Set_Current, Pitch_Can_Set_Current, Shoot_Can_Set_Current, 0);
 				//CAN_CMD_GIMBAL(0, 0, 0, 0);
 			}
         }
@@ -437,7 +437,10 @@ static void GIMBAL_Feedback_Update(Gimbal_Control_t *gimbal_feedback_update)
     gimbal_feedback_update->gimbal_pitch_motor.relative_angle = motor_ecd_to_angle_change(gimbal_feedback_update->gimbal_pitch_motor.gimbal_motor_measure->ecd,
                                                                                           gimbal_feedback_update->gimbal_pitch_motor.offset_ecd);
     gimbal_feedback_update->gimbal_pitch_motor.motor_gyro = *(gimbal_feedback_update->gimbal_INT_gyro_point + INS_GYRO_Y_ADDRESS_OFFSET);
-
+	gimbal_feedback_update->gimbal_pitch_motor.motor_speed = gimbal_feedback_update->gimbal_yaw_motor.gimbal_motor_measure->speed_rpm;
+	//Added by NERanger 20190417
+	
+	
     gimbal_feedback_update->gimbal_yaw_motor.absolute_angle = *(gimbal_feedback_update->gimbal_INT_angle_point + INS_YAW_ADDRESS_OFFSET);
 //    gimbal_feedback_update->gimbal_yaw_motor.relative_angle = motor_ecd_to_angle_change(gimbal_feedback_update->gimbal_yaw_motor.gimbal_motor_measure->ecd,
 //                                                                                        gimbal_feedback_update->gimbal_yaw_motor.offset_ecd);
@@ -610,9 +613,9 @@ static void GIMBAL_relative_angle_limit(Gimbal_Motor_t *gimbal_motor, fp32 add)
     }
     gimbal_motor->relative_angle_set += add;
 	
-	gimbal_motor->max_relative_angle = 1.5f;
-	
-	gimbal_motor->min_relative_angle = -1.5f;
+//	gimbal_motor->max_relative_angle = 1.5f;
+//	
+//	gimbal_motor->min_relative_angle = -1.5f;
 	
     //是否超过最大 最小值
     if (gimbal_motor->relative_angle_set > gimbal_motor->max_relative_angle)

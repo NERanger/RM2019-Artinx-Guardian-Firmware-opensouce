@@ -31,6 +31,23 @@ typedef unsigned char bool_t;
 typedef float fp32;
 typedef double fp64;
 
+//Added by NERanger 20190417
+#define RANGINGa_TRIG_Pin         GPIO_Pin_10
+#define RANGINGa_TRIG_GPIO_Port   GPIOF
+//PWM2 CH2
+#define RANGINGa_ECHO_Pin         GPIO_Pin_1
+#define RANGINGa_ECHO_GPIO_Port   GPIOA
+
+#define RANGINGb_TRIG_Pin         GPIO_Pin_9
+#define RANGINGb_TRIG_GPIO_Port   GPIOI
+//PWM5 CH1
+#define RANGINGb_ECHO_Pin         GPIO_Pin_0
+#define RANGINGb_ECHO_GPIO_Port   GPIOA
+
+#define COLLISIONa_Pin            GPIO_Pin_12
+#define COLLISIONb_Pin            GPIO_Pin_13
+#define COLLISION_GPIO_Port       GPIOD
+
 //云台电机可能can发送失败的情况，尝试使用 随机延迟发送控制指令的方式解决
 #define GIMBAL_MOTOR_6020_CAN_LOSE_SLOVE 0
 

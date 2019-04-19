@@ -50,6 +50,8 @@
 .\objects\main.o: ..\User\hardware\RC\rc.h
 .\objects\main.o: ..\User\hardware\RNG\rng.h
 .\objects\main.o: ..\user\hardware\timer\timer.h
+.\objects\main.o: ..\user\hardware\ranging\ranging.h
+.\objects\main.o: ..\user\hardware\collision\collision.h
 .\objects\main.o: ..\User\FreeRTOS\include\FreeRTOSConfig.h
 .\objects\main.o: ..\User\FreeRTOS\include\FreeRTOS.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
