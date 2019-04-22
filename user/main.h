@@ -31,6 +31,13 @@ typedef unsigned char bool_t;
 typedef float fp32;
 typedef double fp64;
 
+//Added by NERanger 20190422
+typedef struct
+{
+	bool_t usart6_irq_flag;
+	
+}debug_t;
+
 //Added by NERanger 20190417
 #define RANGINGa_TRIG_Pin         GPIO_Pin_10
 #define RANGINGa_TRIG_GPIO_Port   GPIOF

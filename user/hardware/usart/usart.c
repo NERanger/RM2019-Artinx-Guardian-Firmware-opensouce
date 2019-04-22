@@ -29,7 +29,7 @@ void usart_Init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
                 GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
                 GPIO_Init(GPIOG, &GPIO_InitStructure);
 
-                USART_DeInit(USART6);
+                USART_DeInit(PC_COM_USART);
 
                 USART_InitStructure.USART_BaudRate = 115200;
                 USART_InitStructure.USART_WordLength = USART_WordLength_8b;
@@ -37,14 +37,14 @@ void usart_Init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
                 USART_InitStructure.USART_Parity = USART_Parity_Even;
                 USART_InitStructure.USART_Mode = USART_Mode_Rx;
                 USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-                USART_Init(USART1, &USART_InitStructure);
+                USART_Init(PC_COM_USART, &USART_InitStructure);
 
-                USART_DMACmd(USART6, USART_DMAReq_Rx, ENABLE);
+                USART_DMACmd(PC_COM_USART, USART_DMAReq_Rx, ENABLE);
 
-                USART_ClearFlag(USART6, USART_FLAG_IDLE);
-                USART_ITConfig(USART6, USART_IT_IDLE, ENABLE);
+                USART_ClearFlag(PC_COM_USART, USART_FLAG_IDLE);
+                USART_ITConfig(PC_COM_USART, USART_IT_IDLE, ENABLE);
 
-                USART_Cmd(USART6, ENABLE);
+                USART_Cmd(PC_COM_USART, ENABLE);
         }
 		
 		/* -------------- Configure NVIC ---------------------------------------*/
@@ -61,7 +61,7 @@ void usart_Init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
         /* -------------- Configure DMA -----------------------------------------*/
         {
                 DMA_InitTypeDef DMA_InitStructure;
-                DMA_DeInit(DMA2_Stream2);
+                DMA_DeInit(PC_COM_DMA_STREAM);
 
                 DMA_InitStructure.DMA_Channel = DMA_Channel_5;
                 DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) & (USART6->DR);
@@ -78,11 +78,12 @@ void usart_Init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
                 DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull;
                 DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
                 DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
-                DMA_Init(DMA2_Stream1, &DMA_InitStructure);
-                DMA_DoubleBufferModeConfig(DMA2_Stream1, (uint32_t)rx2_buf, DMA_Memory_0);
-                DMA_DoubleBufferModeCmd(DMA2_Stream1, ENABLE);
-                DMA_Cmd(DMA2_Stream1, DISABLE); //Add a disable
-                DMA_Cmd(DMA2_Stream1, ENABLE);
+                DMA_Init(PC_COM_DMA_STREAM, &DMA_InitStructure);
+                DMA_DoubleBufferModeConfig(PC_COM_DMA_STREAM, (uint32_t)rx2_buf, DMA_Memory_0);
+			
+                DMA_DoubleBufferModeCmd(PC_COM_DMA_STREAM, ENABLE);
+                DMA_Cmd(PC_COM_DMA_STREAM, DISABLE); //Add a disable
+                DMA_Cmd(PC_COM_DMA_STREAM, ENABLE);
         }
 }
 

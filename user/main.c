@@ -44,6 +44,8 @@
 #include "remote_control.h"
 #include "start_task.h"
 
+#include "stdio.h"
+
 void BSP_init(void);
 
 int main(void)

@@ -10,6 +10,8 @@
 //接收原始数据，为18个字节，给了36个字节长度，防止DMA传输越界
 uint8_t pc_rx_buf[2][PC_RX_BUF_NUM];
 
+debug_t pc_com_debug;
+
 //初始化DMA，串口6
 void pc_communication_init(void)
 {
@@ -19,6 +21,8 @@ void pc_communication_init(void)
 //串口中断
 void USART6_IRQHandler(void)
 {
+	pc_com_debug.usart6_irq_flag = 1;
+	
     if (USART_GetITStatus(USART6, USART_IT_RXNE) != RESET)
     {
         USART_ReceiveData(USART6);

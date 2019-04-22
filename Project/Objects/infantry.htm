@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\infantry.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\infantry.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Mon Apr 22 11:01:41 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Mon Apr 22 10:16:49 2019
 <BR><P>
 <H3>Maximum Stack Usage =        280 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1813,7 +1813,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f427xx.o(RESET)
 </UL>
-<P><STRONG><a name="[56]"></a>USART6_IRQHandler</STRONG> (Thumb, 172 bytes, Stack size 8 bytes, pc_communication.o(i.USART6_IRQHandler))
+<P><STRONG><a name="[56]"></a>USART6_IRQHandler</STRONG> (Thumb, 178 bytes, Stack size 8 bytes, pc_communication.o(i.USART6_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART6_IRQHandler &rArr; USART_GetITStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_SetCurrDataCounter
@@ -2825,7 +2825,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;INSTask
 </UL>
 
-<P><STRONG><a name="[1cc]"></a>usart_Init</STRONG> (Thumb, 328 bytes, Stack size 80 bytes, usart.o(i.usart_Init))
+<P><STRONG><a name="[1cc]"></a>usart_Init</STRONG> (Thumb, 318 bytes, Stack size 80 bytes, usart.o(i.usart_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 148<LI>Call Chain = usart_Init &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphResetCmd
@@ -4104,7 +4104,7 @@ Local Symbols
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GIMBAL_Init
 </UL>
 
-<P><STRONG><a name="[f3]"></a>GIMBAL_Init</STRONG> (Thumb, 338 bytes, Stack size 8 bytes, gimbal_task.o(i.GIMBAL_Init))
+<P><STRONG><a name="[f3]"></a>GIMBAL_Init</STRONG> (Thumb, 354 bytes, Stack size 8 bytes, gimbal_task.o(i.GIMBAL_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = GIMBAL_Init &rArr; GIMBAL_Feedback_Update &rArr; m3508_gimbal_get_ecd_angle
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_remote_control_point
