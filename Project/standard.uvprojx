@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F427X,USE_STDPERIPH_DRIVER,__FPU_USED,__FPU_PRESENT,ARM_MATH_CM4,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CMSIS;..\FWLIB\inc;..\User;..\User\AHRS;..\User\DSP\Include;..\User\FreeRTOS\include;..\User\FreeRTOS\portable;..\User\FreeRTOS\portable\RVDS\ARM_CM4F;..\user\user_lib;..\User\hardware\ADC;..\User\hardware\BUZZER;..\User\hardware\delay;..\User\hardware\EXIT_Init;..\User\hardware\CAN;..\User\hardware\LED;..\User\hardware\FLASH;..\User\hardware\FRIC;..\User\hardware\LASER;..\User\hardware\POWER_CTRL;..\User\hardware\RC;..\User\hardware\RNG;..\User\hardware\SPI;..\User\hardware\SYS;..\user\hardware\timer;..\User\APP\Calibrate_Task;..\User\APP\CAN_Receive;..\User\APP\Chassis_Task;..\User\APP\Detect_Task;..\User\APP\FreeRTOS_Middleware;..\User\APP\Gimbal_Task;..\User\APP\INS_Task;..\User\APP\pid;..\User\APP\Remote_Control;..\User\APP\Shoot;..\User\APP\Start_Task;..\User\APP\User_Task;..\user\hardware\ranging;..\user\hardware\collision;..\user\APP\collision_detection_task</IncludePath>
+              <IncludePath>..\CMSIS;..\FWLIB\inc;..\User;..\User\AHRS;..\User\DSP\Include;..\User\FreeRTOS\include;..\User\FreeRTOS\portable;..\User\FreeRTOS\portable\RVDS\ARM_CM4F;..\user\user_lib;..\User\hardware\ADC;..\User\hardware\BUZZER;..\User\hardware\delay;..\User\hardware\EXIT_Init;..\User\hardware\CAN;..\User\hardware\LED;..\User\hardware\FLASH;..\User\hardware\FRIC;..\User\hardware\LASER;..\User\hardware\POWER_CTRL;..\User\hardware\RC;..\User\hardware\RNG;..\User\hardware\SPI;..\User\hardware\SYS;..\user\hardware\timer;..\User\APP\Calibrate_Task;..\User\APP\CAN_Receive;..\User\APP\Chassis_Task;..\User\APP\Detect_Task;..\User\APP\FreeRTOS_Middleware;..\User\APP\Gimbal_Task;..\User\APP\INS_Task;..\User\APP\pid;..\User\APP\Remote_Control;..\User\APP\Shoot;..\User\APP\Start_Task;..\User\APP\User_Task;..\user\hardware\ranging;..\user\hardware\collision;..\user\APP\collision_detection_task;..\user\hardware\usart;..\user\APP\pc_communication</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -814,6 +814,11 @@
               <FileType>1</FileType>
               <FilePath>..\user\hardware\collision\collision.c</FilePath>
             </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\hardware\usart\usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -893,6 +898,11 @@
               <FileName>collision_detection_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\APP\collision_detection_task\collision_detection_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>pc_communication.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\APP\pc_communication\pc_communication.c</FilePath>
             </File>
           </Files>
         </Group>

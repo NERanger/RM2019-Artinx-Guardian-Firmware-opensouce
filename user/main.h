@@ -55,6 +55,9 @@ typedef double fp64;
 
 #define RC_NVIC 4
 
+//Added by NERanger 20190420
+#define USART6_NVIC 4
+
 #define CAN1_NVIC 4
 #define CAN2_NVIC 4
 #define TIM3_NVIC 5

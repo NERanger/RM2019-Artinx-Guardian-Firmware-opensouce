@@ -408,11 +408,13 @@ static void GIMBAL_Init(Gimbal_Control_t *gimbal_init)
     gimbal_init->gimbal_yaw_motor.absolute_angle_set = gimbal_init->gimbal_yaw_motor.absolute_angle;
     gimbal_init->gimbal_yaw_motor.relative_angle_set = gimbal_init->gimbal_yaw_motor.relative_angle;
     gimbal_init->gimbal_yaw_motor.motor_gyro_set = gimbal_init->gimbal_yaw_motor.motor_gyro;
+	gimbal_init->gimbal_yaw_motor.motor_speed_set = gimbal_init->gimbal_yaw_motor.motor_speed;// Added by NERanger 20190422
 
 
     gimbal_init->gimbal_pitch_motor.absolute_angle_set = gimbal_init->gimbal_pitch_motor.absolute_angle;
     gimbal_init->gimbal_pitch_motor.relative_angle_set = gimbal_init->gimbal_pitch_motor.relative_angle;
     gimbal_init->gimbal_pitch_motor.motor_gyro_set = gimbal_init->gimbal_pitch_motor.motor_gyro;
+	gimbal_init->gimbal_p_motor.motor_speed_set = gimbal_init->gimbal_pitch_motor.motor_speed;// Added by NERanger 20190422
 
 
 }

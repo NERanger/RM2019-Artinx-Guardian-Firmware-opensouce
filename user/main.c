@@ -34,6 +34,7 @@
 #include "timer.h"
 #include "ranging.h"
 #include "collision.h"
+#include "pc_communication.h"
 
 #include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
@@ -101,6 +102,11 @@ void BSP_init(void)
     }
     //遥控器初始化
     remote_control_init();
+	
+	//Added by NERanger 20190422
+	//pc通讯串口初始化
+	pc_communication_init();
+	
     //flash读取函数，把校准值放回对应参数
     cali_param_init();
 }
