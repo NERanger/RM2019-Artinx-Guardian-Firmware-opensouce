@@ -1930,7 +1930,7 @@ I (..\User\hardware\RNG\rng.h)(0x5C2F41A5)
 I (..\user\hardware\timer\timer.h)(0x5CB8838A)
 I (..\user\hardware\ranging\ranging.h)(0x5CB9BAAB)
 I (..\user\hardware\collision\collision.h)(0x5CB9B761)
-I (..\user\APP\pc_communication\pc_communication.h)(0x5CBD2B68)
+I (..\user\APP\pc_communication\pc_communication.h)(0x5CC0D981)
 I (..\User\FreeRTOS\include\FreeRTOSConfig.h)(0x5C20B0D2)
 I (..\User\FreeRTOS\include\FreeRTOS.h)(0x573F3A16)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
@@ -3122,10 +3122,10 @@ I (..\FWLIB\inc\stm32f4xx_dcmi.h)(0x581CC67A)
 I (..\FWLIB\inc\stm32f4xx_dma2d.h)(0x581CC67A)
 I (..\FWLIB\inc\stm32f4xx_fmc.h)(0x581CC67A)
 I (..\FWLIB\inc\stm32f4xx_sai.h)(0x58220E4C)
-F (..\user\APP\pc_communication\pc_communication.c)(0x5CBD2084)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\FWLIB\inc -I ..\User -I ..\User\AHRS -I ..\User\DSP\Include -I ..\User\FreeRTOS\include -I ..\User\FreeRTOS\portable -I ..\User\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\user\user_lib -I ..\User\hardware\ADC -I ..\User\hardware\BUZZER -I ..\User\hardware\delay -I ..\User\hardware\EXIT_Init -I ..\User\hardware\CAN -I ..\User\hardware\LED -I ..\User\hardware\FLASH -I ..\User\hardware\FRIC -I ..\User\hardware\LASER -I ..\User\hardware\POWER_CTRL -I ..\User\hardware\RC -I ..\User\hardware\RNG -I ..\User\hardware\SPI -I ..\User\hardware\SYS -I ..\user\hardware\timer -I ..\User\APP\Calibrate_Task -I ..\User\APP\CAN_Receive -I ..\User\APP\Chassis_Task -I ..\User\APP\Detect_Task -I ..\User\APP\FreeRTOS_Middleware -I ..\User\APP\Gimbal_Task -I ..\User\APP\INS_Task -I ..\User\APP\pid -I ..\User\APP\Remote_Control -I ..\User\APP\Shoot -I ..\User\APP\Start_Task -I ..\User\APP\User_Task -I ..\user\hardware\ranging -I ..\user\hardware\collision -I ..\user\APP\collision_detection_task -I ..\user\hardware\usart -I ..\user\APP\pc_communication-IE:\Learning\Robot\2019RM_Match\Guardian\standard\Project\RTE-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F427xx -DSTM32F427X -DUSE_STDPERIPH_DRIVER -D__FPU_USED -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o .\objects\pc_communication.o --omf_browse .\objects\pc_communication.crf --depend .\objects\pc_communication.d)
-I (..\user\APP\pc_communication\pc_communication.h)(0x5CBD2B68)
-I (..\user\hardware\usart\usart.h)(0x5CBD23E3)
+F (..\user\APP\pc_communication\pc_communication.c)(0x5CC0DDDF)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\FWLIB\inc -I ..\User -I ..\User\AHRS -I ..\User\DSP\Include -I ..\User\FreeRTOS\include -I ..\User\FreeRTOS\portable -I ..\User\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\user\user_lib -I ..\User\hardware\ADC -I ..\User\hardware\BUZZER -I ..\User\hardware\delay -I ..\User\hardware\EXIT_Init -I ..\User\hardware\CAN -I ..\User\hardware\LED -I ..\User\hardware\FLASH -I ..\User\hardware\FRIC -I ..\User\hardware\LASER -I ..\User\hardware\POWER_CTRL -I ..\User\hardware\RC -I ..\User\hardware\RNG -I ..\User\hardware\SPI -I ..\User\hardware\SYS -I ..\user\hardware\timer -I ..\User\APP\Calibrate_Task -I ..\User\APP\CAN_Receive -I ..\User\APP\Chassis_Task -I ..\User\APP\Detect_Task -I ..\User\APP\FreeRTOS_Middleware -I ..\User\APP\Gimbal_Task -I ..\User\APP\INS_Task -I ..\User\APP\pid -I ..\User\APP\Remote_Control -I ..\User\APP\Shoot -I ..\User\APP\Start_Task -I ..\User\APP\User_Task -I ..\user\hardware\ranging -I ..\user\hardware\collision -I ..\user\APP\collision_detection_task -I ..\user\hardware\usart -I ..\user\APP\pc_communication-IE:\Learning\Robot\2019RM_Match\Guardian\standard\Project\RTE-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F427xx -DSTM32F427X -DUSE_STDPERIPH_DRIVER -D__FPU_USED -D__FPU_PRESENT -DARM_MATH_CM4 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING --C99-o .\objects\pc_communication.o --omf_browse .\objects\pc_communication.crf --depend .\objects\pc_communication.d)
+I (..\user\APP\pc_communication\pc_communication.h)(0x5CC0D981)
 I (..\User\main.h)(0x5CBD202A)
+I (..\user\hardware\usart\usart.h)(0x5CBD23E3)
 I (..\CMSIS\stm32f4xx.h)(0x5A2429C0)
 I (..\CMSIS\core_cm4.h)(0x581CC64C)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)

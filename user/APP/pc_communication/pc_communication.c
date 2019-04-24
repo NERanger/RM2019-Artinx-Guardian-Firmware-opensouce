@@ -7,8 +7,12 @@
 #include "usart.h"
 #include "stdio.h"
 
+void pc_data_handler(volatile const uint8_t *pc_rx_buf, pc_com_t *pc_com);
+
 //接收原始数据，为18个字节，给了36个字节长度，防止DMA传输越界
 uint8_t pc_rx_buf[2][PC_RX_BUF_NUM];
+fp64_uchar_u gimbal_yaw_angle_fp64, gimbal_yaw_angle_uchar, gimbal_pitch_angle_fp64, gimbal_pitch_angle_uchar;
+pc_com_t pc_com;
 
 debug_t pc_com_debug;
 
@@ -44,8 +48,8 @@ void USART6_IRQHandler(void)
             DMA_Cmd(DMA2_Stream1, ENABLE);
             if(this_time_rx_len == PC_FRAME_LENGTH)
             {
-                //处理遥控器数据
-                //SBUS_TO_RC(SBUS_rx_buf[0], &rc_ctrl);
+                //处理pc数据
+                pc_data_handler(pc_rx_buf[0], &pc_com);
                 //记录数据接收时间
                 //DetectHook(DBUSTOE);
             }
@@ -62,11 +66,44 @@ void USART6_IRQHandler(void)
             DMA_Cmd(DMA2_Stream1, ENABLE);
             if(this_time_rx_len == PC_FRAME_LENGTH)
             {
-                //处理遥控器数据
-                //SBUS_TO_RC(SBUS_rx_buf[1], &rc_ctrl);
+                //处理pc数据
+                pc_data_handler(pc_rx_buf[1], &pc_com);
                 //记录数据接收时间
                 //DetectHook(DBUSTOE);
             }
         }
     }
+}
+
+void pc_data_handler(volatile const uint8_t *pc_rx_buf, pc_com_t *pc_com)
+{
+	pc_com->yaw_mode = pc_rx_buf[PC_CMD_GIMBAL_YAW_MODE_BUF_OFFSET];
+	pc_com->pitch_mode = pc_rx_buf[PC_CMD_GIMBAL_PITCH_MODE_BUF_OFFSET];
+	
+	gimbal_yaw_angle_uchar.uchar_data[0] = pc_rx_buf[2];
+	gimbal_yaw_angle_uchar.uchar_data[1] = pc_rx_buf[3];
+	gimbal_yaw_angle_uchar.uchar_data[2] = pc_rx_buf[4];
+	gimbal_yaw_angle_uchar.uchar_data[3] = pc_rx_buf[5];
+	gimbal_yaw_angle_uchar.uchar_data[4] = pc_rx_buf[6];
+	gimbal_yaw_angle_uchar.uchar_data[5] = pc_rx_buf[7];
+	gimbal_yaw_angle_uchar.uchar_data[6] = pc_rx_buf[8];
+	gimbal_yaw_angle_uchar.uchar_data[7] = pc_rx_buf[9];
+	
+	gimbal_pitch_angle_uchar.uchar_data[0] = pc_rx_buf[10];
+	gimbal_pitch_angle_uchar.uchar_data[1] = pc_rx_buf[11];
+	gimbal_pitch_angle_uchar.uchar_data[2] = pc_rx_buf[12];
+	gimbal_pitch_angle_uchar.uchar_data[3] = pc_rx_buf[13];
+	gimbal_pitch_angle_uchar.uchar_data[4] = pc_rx_buf[14];
+	gimbal_pitch_angle_uchar.uchar_data[5] = pc_rx_buf[15];
+	gimbal_pitch_angle_uchar.uchar_data[6] = pc_rx_buf[16];
+	gimbal_pitch_angle_uchar.uchar_data[7] = pc_rx_buf[17];
+	
+	for(uint8_t i = 0; i < UNION_UCHAR_SIZE; i++)
+	{
+		gimbal_yaw_angle_fp64.uchar_data[i] = gimbal_yaw_angle_uchar.uchar_data[i];
+		gimbal_pitch_angle_fp64.uchar_data[i] = gimbal_pitch_angle_uchar.uchar_data[i];
+	}
+	
+	pc_com->yaw_angle_cmd =  gimbal_yaw_angle_fp64.fp64_data;
+	pc_com->pitch_angle_cmd = gimbal_pitch_angle_fp64.fp64_data;
 }

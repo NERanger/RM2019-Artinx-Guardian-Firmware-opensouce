@@ -226,6 +226,11 @@
           <WinNumber>2</WinNumber>
           <ItemText>pc_rx_buf</ItemText>
         </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>pc_com</ItemText>
+        </Ww>
       </WatchWindow2>
       <Tracepoint>
         <THDelay>0</THDelay>

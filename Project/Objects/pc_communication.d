@@ -1,7 +1,7 @@
 .\objects\pc_communication.o: ..\user\APP\pc_communication\pc_communication.c
 .\objects\pc_communication.o: ..\user\APP\pc_communication\pc_communication.h
-.\objects\pc_communication.o: ..\user\hardware\usart\usart.h
 .\objects\pc_communication.o: ..\User\main.h
+.\objects\pc_communication.o: ..\user\hardware\usart\usart.h
 .\objects\pc_communication.o: ..\CMSIS\stm32f4xx.h
 .\objects\pc_communication.o: ..\CMSIS\core_cm4.h
 .\objects\pc_communication.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
