@@ -130,11 +130,11 @@ void chassis_task(void *pvParameters)
 		if (!(toe_is_error(ChassisMotor1TOE) || toe_is_error(ChassisMotor2TOE)))
         {
             //当遥控器掉线的时候，为relax状态，底盘电机指令为零，为了保证一定发送为零，故而不采用设置give_current的方法
-//            if (toe_is_error(DBUSTOE))
-//            {
-//                CAN_CMD_CHASSIS(0, 0, 0, 0);
-//            }
-//            else
+            if (toe_is_error(DBUSTOE))
+            {
+                CAN_CMD_CHASSIS(0, 0, 0, 0);
+            }
+            else
             {
 					CAN_CMD_CHASSIS(chassis_move.motor_chassis[0].give_current, chassis_move.motor_chassis[1].give_current,
 									chassis_move.motor_chassis[2].give_current, chassis_move.motor_chassis[3].give_current);

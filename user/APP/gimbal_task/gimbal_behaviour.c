@@ -144,6 +144,8 @@ static void gimbal_motionless_control(fp32 *yaw, fp32 *pitch, Gimbal_Control_t *
 //云台行为状态机
 static gimbal_behaviour_e gimbal_behaviour = GIMBAL_ZERO_FORCE;
 
+gimbal_behaviour_e debug_gimbal_behaviour;
+
 /**
   * @brief          云台行为状态机以及电机状态机设置
   * @author         RM
@@ -188,6 +190,7 @@ void gimbal_behaviour_mode_set(Gimbal_Control_t *gimbal_mode_set)
     {
         gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE_M3508;
         gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE;
+		//gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_SPD;
     }
     else if (gimbal_behaviour == GIMBAL_MOTIONLESS)
     {
@@ -360,8 +363,8 @@ static void gimbal_behavour_set(Gimbal_Control_t *gimbal_mode_set)
 //        if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR &&
 //             fabs(gimbal_mode_set->gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR))
 		
-		//Modified by NERanger 20190417
-		if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR &&
+		//Modified by NERanger 20190426
+		if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - gimbal_mode_set->gimbal_yaw_motor.relative_angle_set) < GIMBAL_INIT_ANGLE_ERROR &&
              fabs(gimbal_mode_set->gimbal_pitch_motor.relative_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR))
         {
             //到达初始化位置
@@ -449,6 +452,7 @@ static void gimbal_behavour_set(Gimbal_Control_t *gimbal_mode_set)
         motionless_time = 0;
     }
 
+	debug_gimbal_behaviour = gimbal_behaviour;
 
 }
 
@@ -505,7 +509,7 @@ static void gimbal_init_control(fp32 *yaw, fp32 *pitch, Gimbal_Control_t *gimbal
     else
     {
         *pitch = (INIT_PITCH_SET - gimbal_control_set->gimbal_pitch_motor.relative_angle) * GIMBAL_INIT_PITCH_SPEED;
-        *yaw = (INIT_YAW_SET - gimbal_control_set->gimbal_yaw_motor.relative_angle) * GIMBAL_INIT_YAW_SPEED;
+        *yaw = (gimbal_control_set->gimbal_yaw_motor.relative_angle_set - gimbal_control_set->gimbal_yaw_motor.relative_angle) * GIMBAL_INIT_YAW_SPEED;
     }
 }
 
