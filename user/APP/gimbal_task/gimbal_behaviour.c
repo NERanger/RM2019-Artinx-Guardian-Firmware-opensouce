@@ -49,6 +49,18 @@
             (output) = 0;                                \
         }                                                \
     }
+	
+#define pc_cmd_deadline_limit(input, output, dealine)        \
+    {                                                    \
+        if ((input) > (dealine) || (input) < -(dealine)) \
+        {                                                \
+            (output) = (input);                          \
+        }                                                \
+        else                                             \
+        {                                                \
+            (output) = 0;                                \
+        }                                                \
+    }
 
 /**
   * @brief          云台校准的通过判断角速度来判断云台是否到达极限位置
@@ -212,6 +224,11 @@ void gimbal_behaviour_mode_set(Gimbal_Control_t *gimbal_mode_set)
 		gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_SPD;
 		gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_SPD;
 	}
+	else if (gimbal_behaviour == GIMBAL_PC_CMD)  //Added by NERanger 20190427
+	{
+		gimbal_mode_set->gimbal_yaw_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE_M3508;
+		gimbal_mode_set->gimbal_pitch_motor.gimbal_motor_mode = GIMBAL_MOTOR_ENCONDE;
+	}
 }
 
 /**
@@ -234,10 +251,15 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, Gimbal_Control
     static int16_t yaw_channel = 0, pitch_channel = 0;
 	
 	static fp32 rc_spd_yaw_set, rc_spd_pit_set;  //Added by NERanger 20190410
+	static fp64 pc_yaw_cmd, pc_pitch_cmd;        //Added by NERanger 20190427
 
     //将遥控器的数据处理死区 int16_t yaw_channel,pitch_channel
     rc_deadline_limit(gimbal_control_set->gimbal_rc_ctrl->rc.ch[YawChannel], yaw_channel, RC_deadband);
     rc_deadline_limit(gimbal_control_set->gimbal_rc_ctrl->rc.ch[PitchChannel], pitch_channel, RC_deadband);
+	
+	//Added by NERanger 20190427
+	pc_cmd_deadline_limit(gimbal_control_set->gimbal_pc_cmd->yaw_angle_cmd, pc_yaw_cmd, PC_CMD_DEADBAND);
+	pc_cmd_deadline_limit(gimbal_control_set->gimbal_pc_cmd->pitch_angle_cmd, pc_pitch_cmd, PC_CMD_DEADBAND);
 
 	
     rc_add_yaw = yaw_channel * Yaw_RC_SEN - gimbal_control_set->gimbal_rc_ctrl->mouse.x * Yaw_Mouse_Sen;
@@ -286,6 +308,11 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, Gimbal_Control
 	{
 		rc_add_yaw = rc_spd_yaw_set;
 		rc_add_pit = rc_spd_pit_set;
+	}
+	else if (gimbal_behaviour == GIMBAL_PC_CMD)
+	{
+		rc_add_yaw = pc_yaw_cmd;
+		rc_add_pit = pc_pitch_cmd;
 	}
     //将控制增加量赋值
     *add_yaw = rc_add_yaw;

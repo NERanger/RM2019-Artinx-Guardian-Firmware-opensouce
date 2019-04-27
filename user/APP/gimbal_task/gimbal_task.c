@@ -391,6 +391,10 @@ static void GIMBAL_Init(Gimbal_Control_t *gimbal_init)
     gimbal_init->gimbal_INT_gyro_point = get_MPU6500_Gyro_Data_Point();
     //遥控器数据指针获取
     gimbal_init->gimbal_rc_ctrl = get_remote_control_point();
+	
+	gimbal_init->gimbal_pc_cmd = get_pc_com_point();
+	//Added by NERanger 20190427
+	
     //初始化电机模式
     gimbal_init->gimbal_yaw_motor.gimbal_motor_mode = gimbal_init->gimbal_yaw_motor.last_gimbal_motor_mode = GIMBAL_MOTOR_RAW;
     gimbal_init->gimbal_pitch_motor.gimbal_motor_mode = gimbal_init->gimbal_pitch_motor.last_gimbal_motor_mode = GIMBAL_MOTOR_RAW;

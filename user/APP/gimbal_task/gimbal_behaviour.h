@@ -14,7 +14,8 @@ typedef enum
   GIMBAL_SPD,            //云台电机速度环控制
 	
   GIMBAL_TEST_YAW_SPEED,  //云台YAW轴速度环测试
-  GIMBAL_YAW_POS_M3508    //云台YAW轴位置环测试
+  GIMBAL_YAW_POS_M3508,    //云台YAW轴位置环测试
+  GIMBAL_PC_CMD
 } gimbal_behaviour_e;
 
 extern void gimbal_behaviour_mode_set(Gimbal_Control_t *gimbal_mode_set);

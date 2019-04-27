@@ -24,6 +24,7 @@
 #include "CAN_Receive.h"
 #include "pid.h"
 #include "remote_control.h"
+#include "pc_communication.h"
 
 #define YAW_OFFSET_MANUAL 0
 #define MAX_YAW_RELATIVE_ANGLE_MANUAL_ADD (1.0f)
@@ -31,6 +32,9 @@
 #define MAX_PITCH_RELATIVE_ANGLE_MANUAL_SET (1.3f)
 #define MIN_PITCH_RELATIVE_ANGLE_MANUAL_SET (0.2f)
 //Added by NERanger 20190413
+
+#define PC_CMD_DEADBAND 0.02f
+//Added by NERanger 20190427
 
 #define REDUCTION_RATIO_FAC 57.0f
 #define ONE_ROUND_ECD_WITH_REDUCTION (8192*57)
@@ -235,6 +239,7 @@ typedef struct
 typedef struct
 {
     const RC_ctrl_t *gimbal_rc_ctrl;
+	const pc_com_t  *gimbal_pc_cmd;            //Added by NERanger 20190427
     const fp32 *gimbal_INT_angle_point;
     const fp32 *gimbal_INT_gyro_point;
     Gimbal_Motor_t gimbal_yaw_motor;

@@ -107,3 +107,8 @@ void pc_data_handler(volatile const uint8_t *pc_rx_buf, pc_com_t *pc_com)
 	pc_com->yaw_angle_cmd =  gimbal_yaw_angle_fp64.fp64_data;
 	pc_com->pitch_angle_cmd = gimbal_pitch_angle_fp64.fp64_data;
 }
+
+const pc_com_t *get_pc_com_point(void)
+{
+    return &pc_com;
+}

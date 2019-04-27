@@ -27,5 +27,6 @@ typedef struct
 }pc_com_t;
 
 void pc_communication_init(void);
+const pc_com_t *get_pc_com_point(void);
 
 #endif
