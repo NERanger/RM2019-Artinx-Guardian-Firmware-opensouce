@@ -7,6 +7,7 @@
 .\objects\chassis_behaviour.o: ..\User\APP\pid\pid.h
 .\objects\chassis_behaviour.o: ..\User\APP\Remote_Control\remote_control.h
 .\objects\chassis_behaviour.o: ..\User\hardware\RC\rc.h
+.\objects\chassis_behaviour.o: ..\user\APP\pc_communication\pc_communication.h
 .\objects\chassis_behaviour.o: ..\user\user_lib\user_lib.h
 .\objects\chassis_behaviour.o: ..\User\DSP\Include\arm_math.h
 .\objects\chassis_behaviour.o: ..\CMSIS\core_cm4.h

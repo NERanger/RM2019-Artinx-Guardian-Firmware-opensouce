@@ -6,6 +6,7 @@
 .\objects\chassis_task.o: ..\User\APP\pid\pid.h
 .\objects\chassis_task.o: ..\User\APP\Remote_Control\remote_control.h
 .\objects\chassis_task.o: ..\User\hardware\RC\rc.h
+.\objects\chassis_task.o: ..\user\APP\pc_communication\pc_communication.h
 .\objects\chassis_task.o: ..\user\user_lib\user_lib.h
 .\objects\chassis_task.o: ..\User\FreeRTOS\include\FreeRTOSConfig.h
 .\objects\chassis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h

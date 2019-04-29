@@ -157,6 +157,7 @@ static void gimbal_motionless_control(fp32 *yaw, fp32 *pitch, Gimbal_Control_t *
 static gimbal_behaviour_e gimbal_behaviour = GIMBAL_ZERO_FORCE;
 
 gimbal_behaviour_e debug_gimbal_behaviour;
+fp64 debug_gimbal_pitch_pc_cmd;
 
 /**
   * @brief          云台行为状态机以及电机状态机设置
@@ -269,6 +270,7 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, Gimbal_Control
 	rc_spd_pit_set = pitch_channel * PITCH_SPD_RC_FAC;
 	//Modified by NERanger 20190419
 	
+	debug_gimbal_pitch_pc_cmd = pc_pitch_cmd;
 	
     if (gimbal_behaviour == GIMBAL_ZERO_FORCE)
     {
@@ -311,8 +313,8 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, Gimbal_Control
 	}
 	else if (gimbal_behaviour == GIMBAL_PC_CMD)
 	{
-		rc_add_yaw = pc_yaw_cmd;
-		rc_add_pit = pc_pitch_cmd;
+		rc_add_yaw = pc_yaw_cmd * GIMBAL_PC_CMD_YAW_SPEED;
+		rc_add_pit = pc_pitch_cmd * GIMBAL_PC_CMD_PITCH_SPEED;
 	}
     //将控制增加量赋值
     *add_yaw = rc_add_yaw;
@@ -429,7 +431,7 @@ static void gimbal_behavour_set(Gimbal_Control_t *gimbal_mode_set)
     }
     else if (switch_is_mid(gimbal_mode_set->gimbal_rc_ctrl->rc.s[ModeChannel]))
     {
-        gimbal_behaviour = GIMBAL_RELATIVE_ANGLE;
+        gimbal_behaviour = GIMBAL_PC_CMD;
     }
     else if (switch_is_up(gimbal_mode_set->gimbal_rc_ctrl->rc.s[ModeChannel]))
     {

@@ -6,6 +6,7 @@
 .\objects\gimbal_behaviour.o: ..\User\APP\pid\pid.h
 .\objects\gimbal_behaviour.o: ..\User\APP\Remote_Control\remote_control.h
 .\objects\gimbal_behaviour.o: ..\User\hardware\RC\rc.h
+.\objects\gimbal_behaviour.o: ..\user\APP\pc_communication\pc_communication.h
 .\objects\gimbal_behaviour.o: ..\User\DSP\Include\arm_math.h
 .\objects\gimbal_behaviour.o: ..\CMSIS\core_cm4.h
 .\objects\gimbal_behaviour.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h

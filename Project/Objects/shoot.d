@@ -7,6 +7,7 @@
 .\objects\shoot.o: ..\user\user_lib\user_lib.h
 .\objects\shoot.o: ..\User\APP\Gimbal_Task\Gimbal_Task.h
 .\objects\shoot.o: ..\User\APP\pid\pid.h
+.\objects\shoot.o: ..\user\APP\pc_communication\pc_communication.h
 .\objects\shoot.o: ..\User\APP\Gimbal_Task\gimbal_behaviour.h
 .\objects\shoot.o: ..\User\APP\Detect_Task\Detect_Task.h
 .\objects\shoot.o: ..\User\hardware\LASER\laser.h

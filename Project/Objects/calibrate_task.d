@@ -12,6 +12,7 @@
 .\objects\calibrate_task.o: ..\User\APP\Gimbal_Task\gimbal_task.h
 .\objects\calibrate_task.o: ..\User\APP\CAN_Receive\CAN_Receive.h
 .\objects\calibrate_task.o: ..\User\APP\pid\pid.h
+.\objects\calibrate_task.o: ..\user\APP\pc_communication\pc_communication.h
 .\objects\calibrate_task.o: ..\User\FreeRTOS\include\FreeRTOSConfig.h
 .\objects\calibrate_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\calibrate_task.o: ..\User\FreeRTOS\include\FreeRTOS.h

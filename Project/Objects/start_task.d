@@ -22,6 +22,7 @@
 .\objects\start_task.o: ..\User\APP\pid\pid.h
 .\objects\start_task.o: ..\User\APP\Remote_Control\remote_control.h
 .\objects\start_task.o: ..\User\hardware\RC\rc.h
+.\objects\start_task.o: ..\user\APP\pc_communication\pc_communication.h
 .\objects\start_task.o: ..\user\user_lib\user_lib.h
 .\objects\start_task.o: ..\user\APP\collision_detection_task\collision_detection_task.h
 .\objects\start_task.o: ..\user\hardware\collision\collision.h

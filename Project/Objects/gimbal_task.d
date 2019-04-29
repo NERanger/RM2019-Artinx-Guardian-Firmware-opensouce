@@ -5,6 +5,7 @@
 .\objects\gimbal_task.o: ..\User\APP\pid\pid.h
 .\objects\gimbal_task.o: ..\User\APP\Remote_Control\remote_control.h
 .\objects\gimbal_task.o: ..\User\hardware\RC\rc.h
+.\objects\gimbal_task.o: ..\user\APP\pc_communication\pc_communication.h
 .\objects\gimbal_task.o: ..\User\DSP\Include\arm_math.h
 .\objects\gimbal_task.o: ..\CMSIS\core_cm4.h
 .\objects\gimbal_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
